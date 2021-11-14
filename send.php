@@ -5,13 +5,18 @@
 //##########################################################################
 
 if(isset($_POST['send'])) {
+    session_start();
 
-    $number = $_POST['number'];
+    $number = $_SESSION['number'];
+
     $message = $_POST['message'];
-    $apicode = 'TR-ALEXA950361_BFZ8U';
-    $passwd = 'c}4k)i1dpt';
 
-    $result = itexmo($number, $message, $apicode, $passwd);
+    $apicode = 'ST-RAYMU997571_QJYRN';
+    $passwd = '';
+
+    foreach ($number as $value) {
+        $result = itexmo($value, $message, $apicode, $passwd);
+    }
 
     if ($result == ""){
         echo "iTexMo: No response from server!!!
@@ -19,6 +24,7 @@ if(isset($_POST['send'])) {
         Please CONTACT US for help. ";	
     }
     else if ($result == 0){
+        session_destroy();
         echo "Message Sent!";
     }
     else{	
